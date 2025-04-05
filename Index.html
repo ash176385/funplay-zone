@@ -25,10 +25,26 @@
     <p class="text-gray-600">The best collection of handpicked browser games!</p>
   </section>
 
+  <!-- Search + Categories Section -->
+  <section class="max-w-6xl mx-auto px-4 py-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <!-- Search Input -->
+      <input type="text" placeholder="Search games..." class="w-full md:w-1/2 px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" id="searchInput" onkeyup="filterGames()">
+
+      <!-- Categories -->
+      <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
+        <button onclick="filterCategory('All')" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">All</button>
+        <button onclick="filterCategory('Action')" class="bg-gray-200 px-3 py-1 rounded hover:bg-blue-100">Action</button>
+        <button onclick="filterCategory('Puzzle')" class="bg-gray-200 px-3 py-1 rounded hover:bg-blue-100">Puzzle</button>
+        <button onclick="filterCategory('Racing')" class="bg-gray-200 px-3 py-1 rounded hover:bg-blue-100">Racing</button>
+      </div>
+    </div>
+  </section>
+
   <!-- Game Grid -->
   <main class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <!-- BloxdHop.io -->
-    <a href="bloxdhop.html" class="bg-white rounded-lg shadow hover:shadow-lg transition">
+    <a href="bloxdhop.html" class="game-card Action bg-white rounded-lg shadow hover:shadow-lg transition">
       <img src="https://images.crazygames.com/games/bloxdhop-io/cover-1585311608000.png" alt="BloxdHop" class="w-full h-40 object-cover rounded-t-lg">
       <div class="p-4">
         <h3 class="text-lg font-semibold">BloxdHop.io</h3>
@@ -42,5 +58,27 @@
     <p class="text-sm text-gray-500">© 2025 FunPlay Zone. All rights reserved.</p>
   </footer>
 
+  <!-- Filter/Search Script -->
+  <script>
+    function filterGames() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const games = document.querySelectorAll('.game-card');
+      games.forEach(game => {
+        const title = game.querySelector('h3').innerText.toLowerCase();
+        game.style.display = title.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    function filterCategory(category) {
+      const games = document.querySelectorAll('.game-card');
+      games.forEach(game => {
+        if (category === 'All' || game.classList.contains(category)) {
+          game.style.display = 'block';
+        } else {
+          game.style.display = 'none';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
