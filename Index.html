@@ -1,125 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FunPlay Zone - Play Free Online Games</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FunPlay Zone</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
+    const firebaseConfig = {
+     apiKey: "AIzaSyBjj8Wuz3n6UINnArILg2xfydwVnBqi84c",
+     authDomain: "funplayzone-57ba4.firebaseapp.com",
+     projectId: "funplayzone-57ba4",
+     storageBucket: "funplayzone-57ba4.firebasestorage.app",
+     messagingSenderId: "528344995704",
+     appId: "1:528344995704:web:bb109f69ab35ad09d95a8d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore();
+    const provider = new GoogleAuthProvider();
+
+    const loginBtn = document.getElementById("loginBtn");
+    const userInfo = document.getElementById("userInfo");
+
+    let currentUser = null;
+
+    loginBtn.addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          currentUser = result.user;
+          showUser(currentUser);
+        })
+        .catch((error) => {
+          alert("Login failed");
+        });
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUser = user;
+        showUser(user);
+      }
+    });
+
+    function showUser(user) {
+      loginBtn.style.display = 'none';
+      userInfo.innerHTML = `
+        <div class="flex items-center gap-2">
+          <img src="${user.photoURL}" alt="User" class="w-8 h-8 rounded-full">
+          <span class="text-gray-700 font-medium">${user.displayName}</span>
+          <button id="logoutBtn" class="ml-2 text-sm bg-red-500 text-white px-2 py-1 rounded">Logout</button>
+        </div>
+      `;
+
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        signOut(auth).then(() => {
+          userInfo.innerHTML = '';
+          loginBtn.style.display = 'inline-block';
+        });
+      });
+    }
+
+    async function saveGameProgress(score) {
+      if (!currentUser) return;
+
+      await setDoc(doc(db, "users", currentUser.uid), {
+        name: currentUser.displayName,
+        email: currentUser.email,
+        highScore: score
+      });
+
+      console.log("Game progress saved!");
+    }
+  </script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
   <!-- Navbar -->
-  <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-blue-600">🎮 FunPlay Zone</h1>
-    <div class="space-x-4">
-      <a href="#" class="text-gray-700 hover:text-blue-500">Home</a>
-      <a href="#" class="text-gray-700 hover:text-blue-500">Popular</a>
-      <a href="#" class="text-gray-700 hover:text-blue-500">Categories</a>
-      <button id="loginBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login with Google</button>
+  <nav class="bg-white shadow-md">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-green-600">🎮 FunPlay Zone</h1>
+      <div class="flex items-center">
+        <a href="#" class="text-gray-700 hover:text-green-600 px-3">Home</a>
+        <a href="bloxdhop.html" class="text-gray-700 hover:text-green-600 px-3">Play Game</a>
+        <button id="loginBtn" class="ml-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Login</button>
+        <div id="userInfo" class="ml-4"></div>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="text-center py-10 bg-gradient-to-r from-blue-50 to-blue-100">
-    <h2 class="text-4xl font-extrabold text-blue-600 mb-4">Play Free Online Games</h2>
-    <p class="text-gray-600">The best collection of handpicked browser games!</p>
-  </section>
-
-  <!-- Search + Categories Section -->
-  <section class="max-w-6xl mx-auto px-4 py-6">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-      <!-- Search Input -->
-      <input type="text" placeholder="Search games..." class="w-full md:w-1/2 px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" id="searchInput" onkeyup="filterGames()">
-
-      <!-- Categories -->
-      <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
-        <button onclick="filterCategory('All')" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">All</button>
-        <button onclick="filterCategory('Action')" class="bg-gray-200 px-3 py-1 rounded hover:bg-blue-100">Action</button>
-        <button onclick="filterCategory('Puzzle')" class="bg-gray-200 px-3 py-1 rounded hover:bg-blue-100">Puzzle</button>
-        <button onclick="filterCategory('Racing')" class="bg-gray-200 px-3 py-1 rounded hover:bg-blue-100">Racing</button>
-      </div>
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Select a Game to Play</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <!-- Game Card -->
+      <a href="bloxdhop.html" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <img src="https://images.crazygames.com/games/bloxdhop-io/cover-1585311608000.png" alt="BloxdHop.io" class="w-full h-40 object-cover rounded">
+        <h3 class="mt-4 text-xl font-bold text-gray-800">BloxdHop.io</h3>
+        <p class="text-gray-600 text-sm mt-1">Parkour platformer in Minecraft style</p>
+      </a>
     </div>
-  </section>
-
-  <!-- Game Grid -->
-  <main class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <!-- BloxdHop.io -->
-    <a href="bloxdhop.html" class="game-card Action bg-white rounded-lg shadow hover:shadow-lg transition">
-      <img src="https://img.crazygames.com/games/bloxdhop-io/cover-1585311608000.png?auto=format,compress&q=75&cs=strip" alt="BloxdHop.io" class="w-full h-40 object-cover rounded">
-      <div class="p-4">
-        <h3 class="text-lg font-semibold">BloxdHop.io</h3>
-        <p class="text-sm text-gray-600">Minecraft-style parkour fun!</p>
-      </div>
-    </a>
-
-    <!-- Game Card -->
-<a href="templerun.html" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
-  <img src="https://img.crazygames.com/games/temple-run-2/cover-1673521919781.png?auto=format,compress&q=75&cs=strip" alt="Temple Run" class="w-full h-40 object-cover rounded">
-  <h3 class="mt-4 text-xl font-bold text-gray-800">Temple Run 2</h3>
-  <p class="text-gray-600 text-sm mt-1">Run endlessly and collect coins!</p>
-</a>
-
-  </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-white text-center py-4 shadow-inner">
-    <p class="text-sm text-gray-500">© 2025 FunPlay Zone. All rights reserved.</p>
+  <footer class="text-center text-sm text-gray-500 py-6">
+    © 2025 FunPlay Zone. All rights reserved.
   </footer>
-
-  <!-- Firebase Login Script -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyC7-O1RxPMDC2aJQJ0sXEXAMPLEKEY123",
-      authDomain: "funplay-demo.firebaseapp.com",
-      projectId: "funplay-demo",
-      storageBucket: "funplay-demo.appspot.com",
-      messagingSenderId: "123456789012",
-      appId: "1:123456789012:web:abc123example"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    const loginBtn = document.getElementById('loginBtn');
-
-    loginBtn.addEventListener('click', () => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then((result) => {
-          const user = result.user;
-          alert(`Welcome ${user.displayName}`);
-          loginBtn.innerText = "Logout";
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Login failed! Check console.");
-        });
-    });
-  </script>
-
-  <!-- Filter/Search Script -->
-  <script>
-    function filterGames() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const games = document.querySelectorAll('.game-card');
-      games.forEach(game => {
-        const title = game.querySelector('h3').innerText.toLowerCase();
-        game.style.display = title.includes(input) ? 'block' : 'none';
-      });
-    }
-
-    function filterCategory(category) {
-      const games = document.querySelectorAll('.game-card');
-      games.forEach(game => {
-        if (category === 'All' || game.classList.contains(category)) {
-          game.style.display = 'block';
-        } else {
-          game.style.display = 'none';
-        }
-      });
-    }
-  </script>
 </body>
 </html>
