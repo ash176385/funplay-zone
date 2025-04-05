@@ -1,69 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FunPlay Zone</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 min-h-screen font-sans">
-  <!-- Navbar -->
-  <nav class="bg-white shadow-md">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-green-600">🎮 FunPlay Zone</h1>
-      <div>
-        <a href="#" class="text-gray-700 hover:text-green-600 px-3">Home</a>
-        <a href="bloxdhop.html" class="text-gray-700 hover:text-green-600 px-3">Play Game</a>
-        <button onclick="signInWithGoogle()" class="ml-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Login with Google</button>
-      </div>
-    </div>
-  </nav>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-  <!-- Main Content -->
-  <div class="container mx-auto px-4 py-12">
-    <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Select a Game to Play</h2>
-    <p id="login-status" class="text-center text-green-700 mb-4"></p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <!-- Game Card -->
-      <a href="bloxdhop.html" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
-        <img src="https://images.crazygames.com/games/bloxdhop-io/cover-1585311608000.png" alt="BloxdHop.io" class="w-full h-40 object-cover rounded">
-        <h3 class="mt-4 text-xl font-bold text-gray-800">BloxdHop.io</h3>
-        <p class="text-gray-600 text-sm mt-1">Parkour platformer in Minecraft style</p>
-      </a>
-    </div>
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyBjj8Wuz3n6UINnArILg2xfydwVnBqi84c",
+  authDomain: "funplayzone-57ba4.firebaseapp.com",
+  projectId: "funplayzone-57ba4",
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  // Anonymous Login
+  function loginAnonymously() {
+    firebase.auth().signInAnonymously()
+      .then(() => {
+        alert("Logged in anonymously!");
+      })
+      .catch((error) => {
+        console.error("Anon Login Error:", error.message);
+        alert("Anonymous login failed");
+      });
+  }
+
+  // Email/Password Login
+  function loginWithEmail() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        alert("Logged in as " + userCredential.user.email);
+      })
+      .catch((error) => {
+        alert("Login failed: " + error.message);
+      });
+  }
+
+  // Signup (create account)
+  function signupWithEmail() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        alert("Account created: " + userCredential.user.email);
+      })
+      .catch((error) => {
+        alert("Signup failed: " + error.message);
+      });
+  }
+</script>
+
+<!-- UI Part -->
+<div class="text-center py-8">
+  <button onclick="loginAnonymously()" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-900">
+    Login Anonymously
+  </button>
+
+  <div class="mt-6">
+    <input id="email" type="email" placeholder="Email" class="border px-3 py-2 mr-2">
+    <input id="password" type="password" placeholder="Password" class="border px-3 py-2 mr-2">
+    <button onclick="loginWithEmail()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Login</button>
+    <button onclick="signupWithEmail()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Signup</button>
   </div>
+</div>
 
-  <!-- Firebase Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjj8Wuz3n6UINnArILg2xfydwVnBqi84c",
-      authDomain: "funplayzone-57ba4.firebaseapp.com",
-      projectId: "funplayzone-57ba4"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    function signInWithGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then((result) => {
-          const user = result.user;
-          document.getElementById("login-status").innerText = `Logged in as: ${user.displayName}`;
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Login failed");
-        });
-    }
-  </script>
-
-  <!-- Footer -->
-  <footer class="text-center text-sm text-gray-500 py-6">
-    © 2025 FunPlay Zone. All rights reserved.
-  </footer>
-</body>
-</html>
