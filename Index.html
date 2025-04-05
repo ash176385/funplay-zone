@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FunPlay Zone - Play Free Online Games</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
@@ -15,7 +17,7 @@
       <a href="#" class="text-gray-700 hover:text-blue-500">Home</a>
       <a href="#" class="text-gray-700 hover:text-blue-500">Popular</a>
       <a href="#" class="text-gray-700 hover:text-blue-500">Categories</a>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</button>
+      <button id="loginBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login with Google</button>
     </div>
   </nav>
 
@@ -57,6 +59,37 @@
   <footer class="bg-white text-center py-4 shadow-inner">
     <p class="text-sm text-gray-500">© 2025 FunPlay Zone. All rights reserved.</p>
   </footer>
+
+  <!-- Firebase Login Script -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC7-O1RxPMDC2aJQJ0sXEXAMPLEKEY123",
+      authDomain: "funplay-demo.firebaseapp.com",
+      projectId: "funplay-demo",
+      storageBucket: "funplay-demo.appspot.com",
+      messagingSenderId: "123456789012",
+      appId: "1:123456789012:web:abc123example"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const loginBtn = document.getElementById('loginBtn');
+
+    loginBtn.addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          alert(`Welcome ${user.displayName}`);
+          loginBtn.innerText = "Logout";
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Login failed! Check console.");
+        });
+    });
+  </script>
 
   <!-- Filter/Search Script -->
   <script>
