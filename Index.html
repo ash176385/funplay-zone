@@ -1,102 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FunPlay Zone</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FunPlay Zone - Play Free Online Games</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 min-h-screen font-sans">
+<body class="bg-gray-100 text-gray-800">
+
   <!-- Navbar -->
-  <nav class="bg-white shadow-md">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-green-600 flex items-center">🎮 FunPlay Zone</h1>
-      <div>
-        <a href="#" class="text-gray-700 hover:text-green-600 px-3">Home</a>
-        <a href="bloxdhop.html" class="text-gray-700 hover:text-green-600 px-3">Play Game</a>
-        <!-- Login button -->
-        <button onclick="toggleLoginModal()" class="ml-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Login</button>
-      </div>
+  <nav class="bg-white shadow px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-600">🎮 FunPlay Zone</h1>
+    <div class="space-x-4">
+      <a href="#" class="text-gray-700 hover:text-blue-500">Home</a>
+      <a href="#" class="text-gray-700 hover:text-blue-500">Popular</a>
+      <a href="#" class="text-gray-700 hover:text-blue-500">Categories</a>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</button>
     </div>
   </nav>
 
-  <!-- Login Modal -->
-  <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative">
-      <h2 class="text-2xl font-semibold mb-4 text-center text-green-600">Login to FunPlay Zone</h2>
+  <!-- Hero Section -->
+  <section class="text-center py-10 bg-gradient-to-r from-blue-50 to-blue-100">
+    <h2 class="text-4xl font-extrabold text-blue-600 mb-4">Play Free Online Games</h2>
+    <p class="text-gray-600">The best collection of handpicked browser games!</p>
+  </section>
 
-      <div class="space-y-4">
-        <button onclick="loginAnonymously()" class="w-full bg-gray-700 text-white py-2 rounded hover:bg-gray-900">Login Anonymously</button>
-
-        <input id="email" type="email" placeholder="Email" class="w-full border px-4 py-2 rounded" />
-        <input id="password" type="password" placeholder="Password" class="w-full border px-4 py-2 rounded" />
-
-        <div class="flex space-x-2">
-          <button onclick="loginWithEmail()" class="w-1/2 bg-blue-500 text-white py-2 rounded hover:bg-blue-700">Login</button>
-          <button onclick="signupWithEmail()" class="w-1/2 bg-green-500 text-white py-2 rounded hover:bg-green-700">Signup</button>
-        </div>
+  <!-- Game Grid -->
+  <main class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <!-- BloxdHop.io -->
+    <a href="bloxdhop.html" class="bg-white rounded-lg shadow hover:shadow-lg transition">
+      <img src="https://images.crazygames.com/games/bloxdhop-io/cover-1585311608000.png" alt="BloxdHop" class="w-full h-40 object-cover rounded-t-lg">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold">BloxdHop.io</h3>
+        <p class="text-sm text-gray-600">Minecraft-style parkour fun!</p>
       </div>
-
-      <button onclick="toggleLoginModal()" class="absolute top-2 right-3 text-gray-500 hover:text-black text-xl">&times;</button>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <div class="container mx-auto px-4 py-12">
-    <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Select a Game to Play</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <!-- Game Card -->
-      <a href="bloxdhop.html" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
-        <img src="https://images.crazygames.com/games/bloxdhop-io/cover-1585311608000.png" alt="BloxdHop.io" class="w-full h-40 object-cover rounded">
-        <h3 class="mt-4 text-xl font-bold text-gray-800">BloxdHop.io</h3>
-        <p class="text-gray-600 text-sm mt-1">Parkour platformer in Minecraft style</p>
-      </a>
-    </div>
-  </div>
+    </a>
+  </main>
 
   <!-- Footer -->
-  <footer class="text-center text-sm text-gray-500 py-6">
-    © 2025 FunPlay Zone. All rights reserved.
+  <footer class="bg-white text-center py-4 shadow-inner">
+    <p class="text-sm text-gray-500">© 2025 FunPlay Zone. All rights reserved.</p>
   </footer>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script>
-    const firebaseConfig = {
-    apiKey: "AIzaSyBjj8Wuz3n6UINnArILg2xfydwVnBqi84c",
-    authDomain: "funplayzone-57ba4.firebaseapp.com",
-    projectId: "funplayzone-57ba4",
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-    function toggleLoginModal() {
-      const modal = document.getElementById("loginModal");
-      modal.classList.toggle("hidden");
-    }
-
-    function loginAnonymously() {
-      firebase.auth().signInAnonymously()
-        .then(() => alert("Logged in anonymously!"))
-        .catch((error) => alert("Anonymous login failed: " + error.message));
-    }
-
-    function loginWithEmail() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => alert("Logged in as " + userCredential.user.email))
-        .catch((error) => alert("Login failed: " + error.message));
-    }
-
-    function signupWithEmail() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => alert("Account created: " + userCredential.user.email))
-        .catch((error) => alert("Signup failed: " + error.message));
-    }
-  </script>
 </body>
 </html>
