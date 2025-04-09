@@ -2,9 +2,30 @@
 <html>
 <head>
   <title>Temple Run</title>
-  <style>body { margin: 0; }</style>
+  <style>
+    body, html { margin: 0; height: 100%; }
+    iframe { width: 100%; height: 100%; border: none; }
+    .topbar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+    }
+    .topbar a {
+      background: #4f46e5;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-family: sans-serif;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <iframe src="https://ubg77.github.io/run/temple-run-2/" width="100%" height="100%" frameborder="0"></iframe>
+  <div class="topbar">
+    <a href="../../index.html">⬅️ Home</a>
+  </div>
+  <iframe src="https://ubg77.github.io/run/temple-run-2/"></iframe>
 </body>
 </html>
