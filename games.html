@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Games - FunPlayZone</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+    }
+    header {
+      background-color: #4b4bff;
+      padding: 20px;
+      color: white;
+      text-align: center;
+      font-size: 24px;
+    }
+    .games-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+    .game-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .game-card:hover {
+      transform: scale(1.02);
+    }
+    .game-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .game-card h3 {
+      margin: 15px;
+      font-size: 1.2rem;
+    }
+    .game-card a {
+      display: block;
+      margin: 0 15px 15px;
+      padding: 10px;
+      background: #4b4bff;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+    footer {
+      background-color: #4b4bff;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>🎮 Select a Game to Play</header>
+  
+  <div class="games-container">
+    <div class="game-card">
+      <img src="https://img.crazygames.com/games/bloxd-io/cover-1614691454811.png" alt="Bloxd.io">
+      <h3>Bloxd.io</h3>
+      <a href="games/bloxd.html">Play Now</a>
+    </div>
+
+    <div class="game-card">
+      <img src="https://img.crazygames.com/games/stickman-hook/cover-1580735093759.png" alt="Stickman Hook">
+      <h3>Stickman Hook</h3>
+      <a href="games/stickman.html">Play Now</a>
+    </div>
+
+    <div class="game-card">
+      <img src="https://img.crazygames.com/games/planet-smash/cover-1661435828423.png" alt="Planet Smash">
+      <h3>Planet Smash</h3>
+      <a href="games/planet-smash.html">Play Now</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 FunPlayZone. All rights reserved.</p>
+  </footer>
+</body>
+</html>
