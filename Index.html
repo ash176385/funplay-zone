@@ -2,54 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FunPlay Zone</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #fff8f0;
-      color: #333;
-    }
-
-    header {
-      background: #ff6f00;
-      color: white;
-      text-align: center;
-      padding: 25px 10px;
-      font-size: 2em;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .container {
-      padding: 40px;
-      text-align: center;
-    }
-
-    .container p {
-      font-size: 1.2em;
-      color: #666;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #777;
-      font-size: 14px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Game Zone</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">🎮 MyGameZone</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Popular</a></li>
+        <li><a href="#">New</a></li>
+        <li><a href="#">Categories</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <header>🎮 FunPlay Zone</header>
+  <!-- Game Grid -->
+  <main class="game-container">
+    <div class="game-card">
+      <img src="game1-thumbnail.jpg" alt="Game 1" />
+      <h3>Temple Run</h3>
+    </div>
+    <div class="game-card">
+      <img src="game2-thumbnail.jpg" alt="Game 2" />
+      <h3>Subway Surfers</h3>
+    </div>
+    <div class="game-card">
+      <img src="game3-thumbnail.jpg" alt="Game 3" />
+      <h3>Car Racing</h3>
+    </div>
+    <!-- Add more game-cards here -->
+  </main>
 
-  <div class="container">
-    <p>Welcome to FunPlay Zone!<br>Add some awesome games to get started 🚀</p>
-  </div>
-
-  <footer>© 2025 FunPlay Zone. All rights reserved.</footer>
-
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 MyGameZone. All rights reserved.</p>
+  </footer>
 </body>
 </html>
 
