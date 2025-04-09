@@ -1,13 +1,28 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+body {
   font-family: 'Poppins', sans-serif;
-  background: #f5f7fa;
+  background: #f0f2f5;
   color: #333;
 }
 
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
 header {
-  background: #1e1e2f;
-  padding: 15px 40px;
+  background-color: #20232a;
+  padding: 15px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,8 +35,8 @@ header {
 }
 
 nav ul {
-  list-style: none;
   display: flex;
+  list-style: none;
   gap: 20px;
 }
 
@@ -29,13 +44,18 @@ nav ul li a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
+  transition: 0.2s ease;
+}
+
+nav ul li a:hover {
+  color: #61dafb;
 }
 
 .hero {
+  background: linear-gradient(120deg, #4f46e5, #6d28d9);
+  color: #fff;
   text-align: center;
   padding: 60px 20px;
-  background: #4f46e5;
-  color: white;
 }
 
 .hero h1 {
@@ -47,19 +67,27 @@ nav ul li a {
   font-size: 18px;
 }
 
+.games-section {
+  padding: 40px 0;
+}
+
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
 }
 
 .game-card {
-  background: white;
-  border-radius: 12px;
+  background: #fff;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
+  transition: transform 0.2s;
+}
+
+.game-card:hover {
+  transform: scale(1.03);
 }
 
 .game-card img {
@@ -70,6 +98,8 @@ nav ul li a {
 
 .game-card h3 {
   margin: 10px 0;
+  font-size: 18px;
+  color: #222;
 }
 
 .play-btn {
@@ -77,15 +107,22 @@ nav ul li a {
   margin: 10px 0 20px;
   padding: 10px 20px;
   background: #4f46e5;
-  color: white;
-  border-radius: 8px;
+  color: #fff;
   text-decoration: none;
+  border-radius: 8px;
   font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.play-btn:hover {
+  background: #3730a3;
 }
 
 footer {
+  background: #20232a;
+  color: #ccc;
   text-align: center;
-  padding: 20px;
-  background: #1e1e2f;
-  color: #fff;
+  padding: 20px 0;
+  margin-top: 40px;
 }
+
